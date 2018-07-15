@@ -321,3 +321,233 @@
         return 0;
     } 
 ```
+## G-众数问题
+### describe
+	    给定含有n个元素的多重集合S，每个元素在S中出现的次数称为该元素的重数。多重集S中重数最大的元素称为众数。
+	    例如，S={1，2，2，2，3，5}。
+	    多重集S的众数是2，其重数为3。
+	    现在给你一个已经排好序的集合S，让你求出其众数和重数。
+	Input
+	    输入只有一行，有一个整数n(1<=n<=100)开始，表示集合S中元素个数，接下来有n个由一个空格隔开的整数(-100~100), 为集合S的元素，<br>元素从小到大或者从大到小给出。 
+	Output
+	    输出一行二个整数X和Y，X表示众数和Y为重数，用一个空格隔开。如果存在多个解，只需输出值最小的众数即可。 
+	Sample Input
+	    6 1 2 2 2 3 5
+	    3 -1 -1 -1
+	Sample Output
+	    2 3
+	    -1 3
+### code
+	//用一个数组记录S集中各数出现的次数，数组的下标为数的值，遍历数组找到从数和重数即可。
+```cpp	
+	#include <iostream>
+	#include <cmath>
+	#include <iomanip>
+	#include <algorithm>
+	#include <string>
+	using namespace std;
+	int main()
+	{
+		int n;
+		int i;
+		int num[105];
+		int sum;
+		while(cin>>n)
+		{
+			int a[205]={0};
+			int max=0;
+			for(i=0;i<n;i++)
+			{
+				cin>>num[i];
+				num[i]+=100;
+				a[num[i]]++;
+			}
+			for(i=0;i<205;i++)
+			{
+				if(a[i]>max){
+					sum=i;
+					max=a[i];
+				}
+			}
+			cout<<sum-100<<" "<<max<<endl;
+		}
+		return 0;
+	}
+```	
+## H-分解质因数
+### describe
+	     假设x是一个正整数，它的值不超过65535(即1<x<=65535)，请编写一个程序，将x分解为若干个素数的乘积。 
+	Input
+	    输入的第一行含一个正整数k (1<=k<=10)，表示测试例的个数，后面紧接着k行，每行对应一个测试例，包含一个正整数x。 
+	Output
+	    每个测试例对应一行输出，输出x的素数乘积表示式，式中的素数从小到大排列，两个素数之间用“*”表示乘法。 
+	Sample Input
+
+	    2
+	    11
+	    9828
+
+	Sample Output
+
+	    11
+	    2*2*3*3*3*7*13
+### code
+	//循环出输出这个数的质因子，直到这个数本身为质数为止
+```cpp
+	#include <iostream>
+	#include <cmath>
+	#include <iomanip>
+	#include <algorithm>
+	#include <string>
+	using namespace std;
+	bool isprime(int x)
+	{
+		int n=sqrt(x);
+		int i;
+		for(i=2;i<=n;i++)
+		{
+			if(x%i==0) return 0;
+		}
+		return 1;
+	}
+	int main()
+	{
+		int t;
+		int x;
+		int i;
+		cin>>t;
+		while(t--)
+		{
+			cin>>x;
+			while(!isprime(x))
+			{
+				int n=sqrt(x);
+				for(i=2;i<=n;i++)
+				{
+					if(x%i==0) {
+						cout<<i<<"*";
+						x/=i;
+						break;
+					}
+				}
+			}
+			cout<<x<<endl;
+		}
+		return 0;
+	}
+```
+## I-穿越沙漠
+### describe
+	     一辆吉普车来到x公里宽的沙漠边沿A点，吉普车的耗油量为1升/公里，总装油量为500升。通常，吉普车必须用自身油箱中的油在沙漠中设置若干个临时储
+	     油点，才能穿越沙漠的。假设在沙漠边沿A点有充足的汽油可供使用，那么吉普车从A点穿过这片沙漠到达终点B，至少要耗多少升油。请编写一个程序，计
+	     算最少的耗油量（精确到小数点后3位）。
+	    （1）假设吉普车在沙漠中行进时不发生故障；
+	    （2）吉普车在沙漠边沿A点到终点B的直线距离为x≧500公里(即沙漠宽度)； 
+	Input
+	    输入的第一行含一个正整数k (1<=k<=6)，表示测试例的个数。后面紧接着k行，每行对应一个测试例，包含一个正整数x，表示从A点到B点的距离
+	    （1<=x<=2000）。 
+	Output
+	    每个测试例对应一行输出，包含一个数，表示最少的油耗量。 
+	Sample Input
+	    2
+	    500
+	    1000
+	Sample Output
+	    500.000
+	    3836.497
+### code
+	
+	除C题外我认为最难的一题，这里尽量把思路写的详细一些。
+	车子要穿越沙漠，
+	当距离小于500时，毫无疑问，距离是多少就需要多少油。
+	当距离大于500时就需要建立储油点，如何建立储油点就是最关键的问题。
+	这时需要反着分析，要使耗油量最少，毫无疑问，最后的一个储油点的位置是离终点500里处，且当车子经过这里车子所剩的油加上储油点的刚好为500，
+	可以看成，最后一个储油点需要有500升油。(oid[1]=500,2k-1=1,x[1]=500)
+	然后是倒数第二个储油点，这个储油点需要往倒数第一个储油点送500升油，不难发现两储油点车子的往返数是奇数，设为2k-1，当k=1，无法运送500
+	升油，k=2时往返3次，距离x=500/3时刚好可以运送500升，此时第二个储油点为1000升，当k=3时往返5次，x=200，需储油1500升，以此类推当x=500/3
+	时耗油量最少，所以倒数第二储油点储油1000升。(oil[2]=1000,2k-1=3,x[2]=500/3)。
+	类推可知倒数第三个储油点与倒数第二个储油点需往返5次，k=3，距离x=500/5，储油oil[3]=1500。(oil[3]=1500,2k-1=5,x[3]=500/5)
+	.......
+	可得出公式：oil[i]=oil[i-1]+(2i-1)*x[i],oil[1]=500
+	oil[i]=500*i
+	可以最少需要油量oil=oil[k]+(x[1]+....+x[k]-x)*(2*k-1)
+```cpp	
+	#include <iostream>
+	#include <cmath>
+	#include <iomanip>
+	#include <algorithm>
+	#include <string>
+	using namespace std;
+	int main()
+	{
+		int t;
+		int k;
+		double oil,sum,x;
+		cin>>t;
+		while(t--)
+		{
+			cin>>x;
+			k=1;
+			sum=500;
+			if(x<500)
+			{
+				oil=x;
+			}
+			while(sum<x)
+			{
+				k++;
+				sum+=(double)500/(2*k-1);
+			}
+			oil=500*k+(x-sum)*(2*k-1);	//倒数第k个储油点的油量减去多出距离的耗油量(第K个储油点在起点或者起点的后面)
+			cout<<setiosflags(ios::fixed)<<setprecision(3)<<oil<<endl;
+		}
+		return 0;
+	} 
+```	
+## J-神庙逃亡
+### describe
+
+
+	    话说最近穷猫猫LKity意外得到了一部ANDROID手机，于是，LKity兴奋地为自己的新机子安装了神往已久的游戏——神庙逃亡（Temple Run）。可惜，
+	    LKity不仅仅是一只穷猫猫，更是一只笨猫猫。每次她玩这款游戏的时候，都被群鄙视了。例如下图所示情形：
+	    逃亡路途中，在Merida公主正前方S米出现了一堵火墙。火墙高度为H米。LKity控制着Merida公主以垂直方向上为Vy米/秒的速度试图跨越前方的火墙。已
+	    知现在Merida公主奔跑的速度（即水平速度）为Vx米/秒。你猜猜，笨笨的LKity能顺利控制Merida公主通过此障碍吗？【注：为了简便，在TempleRun的
+	    世界中，重力加速度恒为10m*s^-2】
+	Input
+	    输入为标准输入，输入数据第一行为一个正整数T(1<=T<=100)表示接下来有T组测试数据 接下来为T行，每行一组数据，包括4个正整数S，H。Vx，Vy用空
+	    格隔开。其中，所有整数都在区间【1，1,000,000】内。数据保证S为Vx的倍数。 
+	Output
+	    对于每组数据，请输出一行，如果Merida公主能顺利通过前方火墙则输出“good done!”，否则输出“poor Merida!”。 
+	Sample Input
+	    2
+	    100 1 1 1
+	    10 1 10 100
+	Sample Output
+	    poor Merida!
+	    good done!
+### code
+	//物理题，X=V0*t-1/2*g*t^2
+```cpp	
+	#include <iostream>
+	#include <cmath>
+	#include <iomanip>
+	#include <algorithm>
+	#include <string>
+	using namespace std;
+	int main()
+	{
+		int T;
+		cin>>T;
+		int s,h,x,y;
+		bool flag;
+		while(T--)
+		{
+			cin>>s>>h>>x>>y;
+			int t=s/x;
+			int m=y*t-(10*t*t)/2;
+			if(m>h) cout<<"good done!"<<endl;
+			else cout<<"poor Merida!"<<endl;
+		}
+		return 0;
+	} 
+```	

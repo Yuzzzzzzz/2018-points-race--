@@ -16,7 +16,7 @@
         1.41
 ### code
     //两点间距离公式，输出保留两位小数
-    
+ ```cpp   
     #include <iostream>
     #include <cmath>
     #include <iomanip>
@@ -33,7 +33,7 @@
         }
     	return 0;
     } 
-
+```
 
 ## B-小学生的游戏
 ### describe

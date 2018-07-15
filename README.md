@@ -71,7 +71,7 @@
 ### code
     //构建ans结构体，用结构体数组保存猜数的情况，然后遍历结构体数组与最后一组回答情况比较。
     //注：cin.getline前需要加上getchar接收前面输入的回车。
-    
+```cpp    
     #include <iostream>
     #include <cmath>
     #include <iomanip>
@@ -124,6 +124,7 @@
     	}
     	return 0;
     } 
+```
  ## D-又见LKity
  ### describe
  
@@ -150,7 +151,7 @@
     位置，如果不等存入相应的S串
     存入时要注意位置，S2和S都可能含有空格，输入时不能用cin。
     */
-    
+ ```cpp   
     #include <iostream>
     #include <iostream.h> 
     #include <cmath>
@@ -204,7 +205,8 @@
             cout<<sum<<endl;
         }
         return 0;
-    } 
+    }
+```    
 ## E-数字的孔数
 ### describe
          S得到一个数，他想知道这个数每一位上的数字的孔数之和。1,2,3,5,7这几个数字是没有孔的，0,4,6,9都有一个孔，8有两个孔。 
@@ -221,7 +223,7 @@
         3
 ### code
     //按位数拆开求孔数和即可。
-    
+```cpp    
     #include <iomanip>
     #include <algorithm>
     #include <string>
@@ -246,7 +248,8 @@
             cout<<sum<<endl;
         }
         return 0;
-    } 
+    }
+```    
 ## F-简单的等式
 ### describe
          现在有一个等式如下：x^2+s(x,m)x-n=0。其中s(x,m)表示把x写成m进制时，每个位数相加的和。现在，在给定n，m的情况下，求出满足等式的最小的正整数
@@ -274,7 +277,7 @@
     S(x,m)的范围很小，这里我取得的是100，可能更大或者更小。
     这样枚举S(x,m)的值题目就变为已知一元二次方程求是否有整数解了，把求出的解带回式子验算即可。
     */
-    
+```cpp    
     #include <iostream>
     #include <cmath>
     #include <iomanip>
@@ -317,3 +320,4 @@
         }
         return 0;
     } 
+```
